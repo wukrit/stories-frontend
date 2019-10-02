@@ -7,10 +7,15 @@ const articleList = document.querySelector("#article-list")
 const articleView = document.querySelector("#article-view")
 const leftNav = document.querySelector("#left-nav")
 const rightNav = document.querySelector("#right-nav")
+const login = document.querySelector("#login")
+const loginModal = document.querySelector("#login-modal")
+const loginModalCloseButton = document.querySelector(".modal-close")
+const loginModalBg = document.querySelector(".modal-background")
 let selectedColumn = null
 let cachedTopics = null
 const bgColorArr = ["has-background-primary", "has-background-info", "has-background-link", "has-background-success", "has-background-warning", "has-background-danger", "has-background-white"]
 
+// Element Creation Helpers
 const createNavElement = (linkText, linkTarget, id) => {
     if (document.querySelector(`#${id}`)){
         document.querySelector(`#${id}`).remove()
@@ -26,8 +31,6 @@ const createNavElement = (linkText, linkTarget, id) => {
     leftNav.append(newNavElement)
 }
 
-
-// Element Creation Helpers
 const createTileList = topicArr => {
     selectedColumn = createTileColumn("topics", topicList)
     let tiles = 0
@@ -200,6 +203,10 @@ const handleArticleClick = event => {
     createArticleView(selectedArticle)
 }
 
+const toggleLoginModal = event => {
+    loginModal.classList.toggle("is-active")
+}
+
 // Fetches
 
 // Initial Fetch
@@ -209,3 +216,8 @@ fetch("http://localhost:3000/topics")
         cachedTopics = topicArr
         createTileList(cachedTopics)
     })
+
+// Add Event Listeners
+login.addEventListener("click", toggleLoginModal)
+loginModalCloseButton.addEventListener("click", toggleLoginModal)
+loginModalBg.addEventListener("click", toggleLoginModal)
