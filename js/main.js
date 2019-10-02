@@ -84,79 +84,28 @@ const handleTopicClick = (event) => {
 }
 
 const createArticleList = topic => {
-    // Create A column and set it as selected column
     selectedColumn = createTileColumn("articles", articleList)
     let tiles = 0
 
     topic.articles.map(article => {
         if (tiles < 20) {
-            createArticleTile(article)
+            checkArticleCols(article)
             tiles++
         } else {
-            createArticleTile(article, true)
+            checkArticleCols(article, true)
             tiles = 0
         }
     })
 }
 
-
-const createArticleTile = (article, newCol = false) => {
+const checkArticleCols = (article, newCol = false) => {
     if (newCol) {
-        selectedColumn = createTileColumn("articles", articleList)
-
-        const newTile = document.createElement("div")
-        newTile.classList.add("tile", "is-child", "box")
-        newTile.dataset.id = article.id
-
-        const articleTitle = document.createElement("p")
-        articleTitle.classList.add("title")
-        articleTitle.dataset.id = article.id
-        articleTitle.innerText = article.title
-
-        const articleSource = document.createElement("p")
-        articleSource.classList.add("subtitle")
-        articleSource.dataset.id = article.id
-        articleSource.innerText = article.source
-        
-        const articleDesc = document.createElement("p")
-        articleDesc.dataset.id = article.id
-        articleDesc.innerText = article.description
-        
-        const articleDate = document.createElement("p")
-        articleDate.dataset.id = article.id
-        articleDate.innerText = article.published_at
-
-        newTile.append(articleTitle, articleSource, articleDesc, articleDate)
-        selectedColumn.append(newTile)
-        
-    } else {
-        const newTile = document.createElement("div")
-        newTile.classList.add("tile", "is-child", "box")
-        newTile.dataset.id = article.id
-
-        const articleTitle = document.createElement("p")
-        articleTitle.classList.add("title")
-        articleTitle.dataset.id = article.id
-        articleTitle.innerText = article.title
-
-        const articleSource = document.createElement("p")
-        articleSource.classList.add("subtitle")
-        articleSource.dataset.id = article.id
-        articleSource.innerText = article.source
-        
-        const articleDesc = document.createElement("p")
-        articleDesc.dataset.id = article.id
-        articleDesc.innerText = article.description
-        
-        const articleDate = document.createElement("p")
-        articleDate.dataset.id = article.id
-        articleDate.innerText = article.published_at
-
-        newTile.append(articleTitle, articleSource, articleDesc, articleDate)
-        selectedColumn.append(newTile)
+        selectedColumn = createTileColumn("articles", articleList)   
     }
+    createArticleTile(article)
 }
 
+// Remove all Children of Element
 const clearChildren = element => {
     let first = element.firstElementChild; 
         while (first) { 
@@ -164,3 +113,30 @@ const clearChildren = element => {
             first = element.firstElementChild; 
         } 
 }
+
+const createArticleTile = article => {
+    const newTile = document.createElement("div")
+    newTile.classList.add("tile", "is-child", "box")
+    newTile.dataset.id = article.id
+
+    const articleTitle = document.createElement("p")
+    articleTitle.classList.add("title")
+    articleTitle.dataset.id = article.id
+    articleTitle.innerText = article.title
+
+    const articleSource = document.createElement("p")
+    articleSource.classList.add("subtitle")
+    articleSource.dataset.id = article.id
+    articleSource.innerText = article.source
+    
+    const articleDesc = document.createElement("p")
+    articleDesc.dataset.id = article.id
+    articleDesc.innerText = article.description
+    
+    const articleDate = document.createElement("p")
+    articleDate.dataset.id = article.id
+    articleDate.innerText = article.published_at
+
+    newTile.append(articleTitle, articleSource, articleDesc, articleDate)
+    selectedColumn.append(newTile)
+} 
