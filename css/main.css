@@ -1,6 +1,8 @@
-iframe {
-    margin-right: auto;
+.container {
+    top: 50px;
+}
+
+#article-view {
     margin-left: auto;
-    width: 80vw;
-    height: 100vh;
+    margin-right: auto;
 }

@@ -5,8 +5,27 @@ const topicContainer = document.querySelector("#topic-container")
 const topicList = document.querySelector("#topic-list")
 const articleList = document.querySelector("#article-list")
 const articleView = document.querySelector("#article-view")
+const leftNav = document.querySelector("#left-nav")
+const rightNav = document.querySelector("#right-nav")
 let selectedColumn = null
 let cachedTopics = null
+const bgColorArr = ["has-background-primary", "has-background-info", "has-background-link", "has-background-success", "has-background-warning", "has-background-danger", "has-background-white"]
+
+const createNavElement = (linkText, linkTarget, id) => {
+    if (document.querySelector(`#${id}`)){
+        document.querySelector(`#${id}`).remove()
+    }
+    const newNavElement = document.createElement("a")
+    newNavElement.classList.add("navbar-item")
+    newNavElement.id = id
+    newNavElement.innerText = linkText
+
+    newNavElement.addEventListener("click", event => {
+        linkTarget.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    })
+    leftNav.append(newNavElement)
+}
+
 
 // Element Creation Helpers
 const createTileList = topicArr => {
@@ -65,7 +84,8 @@ const createArticleList = topic => {
             tiles = 0
         }
     })
-    articleList.scrollIntoView(true)
+    createNavElement("Back to Articles", articleList, "back-to-articles")
+    articleList.scrollIntoView({ behavior: 'smooth', block: 'start' })
 }
 
 const checkArticleCols = (article, topic, newCol = false) => {
@@ -78,6 +98,7 @@ const checkArticleCols = (article, topic, newCol = false) => {
 const createArticleTile = (article, topic) => {
     const newTile = document.createElement("div")
     newTile.classList.add("tile", "is-child", "box")
+    newTile.classList.add(bgColorArr[Math.floor(Math.random()*bgColorArr.length)])
     newTile.dataset.id = article.id
     newTile.dataset.topicId = topic.id
 
@@ -147,7 +168,7 @@ const createArticleView = article => {
     selectedArticleTile.append(articleTitle, articleAuthor, articleSource, articleImage, articleDesc, articleDate)
     articleLink.append(selectedArticleTile)
     articleView.append(articleLink)
-    articleView.scrollIntoView(true)
+    articleView.scrollIntoView({ behavior: 'smooth', block: 'start' })
 }
 
 // Remove all Children of Element
