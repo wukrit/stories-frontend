@@ -11,9 +11,19 @@ const login = document.querySelector("#login")
 const loginModal = document.querySelector("#login-modal")
 const loginModalCloseButton = document.querySelector(".modal-close")
 const loginModalBg = document.querySelector(".modal-background")
+const loginForm = document.querySelector("#login-form")
+const signupForm = document.querySelector("#signup-form")
+const toggleSpan = document.querySelectorAll(".toggle-sign-in")
+const topButton = document.querySelector(".top")
 let selectedColumn = null
 let cachedTopics = null
 const bgColorArr = ["has-background-primary", "has-background-info", "has-background-link", "has-background-success", "has-background-warning", "has-background-danger", "has-background-white"]
+
+const toggleForms = event => {
+    signupForm.classList.toggle("hidden")
+    loginForm.classList.toggle("hidden")
+    toggleSpan.forEach(span => span.classList.toggle("hidden"))
+}
 
 // Element Creation Helpers
 const createNavElement = (linkText, linkTarget, id) => {
@@ -54,13 +64,17 @@ const checkTopicCol = (topic, newCol = false) => {
 
 const createTopicTile = topic => {
     const newTile = document.createElement("div")
-    newTile.classList.add("tile", "is-child", "box")
+    newTile.classList.add("tile", "is-child", "box",  "topic")
     newTile.dataset.id = topic.id
 
     const topicTitle = document.createElement("p")
     topicTitle.classList.add("title")
     topicTitle.innerText = topic.title
     topicTitle.dataset.id = topic.id
+
+    // debugger
+    // newTile.setAttribute("style", `background-image: url(${topic.articles[0].img_url})`)
+    newTile.classList.add(bgColorArr[Math.floor(Math.random()*bgColorArr.length)])
 
     newTile.append(topicTitle)
     selectedColumn.append(newTile)
@@ -207,6 +221,14 @@ const toggleLoginModal = event => {
     loginModal.classList.toggle("is-active")
 }
 
+const revealTopButton = event => {
+    if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50)  {
+        topButton.classList.remove("hidden")
+    } else {
+        topButton.classList.add("hidden")
+    }
+}
+
 // Fetches
 
 // Initial Fetch
@@ -218,6 +240,9 @@ fetch("http://localhost:3000/topics")
     })
 
 // Add Event Listeners
+window.addEventListener("scroll", revealTopButton)
 login.addEventListener("click", toggleLoginModal)
 loginModalCloseButton.addEventListener("click", toggleLoginModal)
 loginModalBg.addEventListener("click", toggleLoginModal)
+toggleSpan.forEach(span => span.addEventListener("click", toggleForms))
+topButton.addEventListener("click", event => {topicContainer.scrollIntoView({ behavior: 'smooth', block: 'start' })})

@@ -48,10 +48,33 @@
     </main>
     <div class="modal" id="login-modal">
         <div class="modal-background"></div>
-        <div class="modal-content">
-            
+        <div class="modal-content has-background-white box">
+            <form action="http://localhost:3000/users" method="GET" id="login-form">
+                <h2 class="title">Welcome Back!</h2>
+                <hr>
+                <label class="label" for="username">Enter Username:</label>
+                <input class="input" type="text" name="username" placeholder="Enter Username" value="" /> 
+                <br><br>
+                <input class="button is-primary" type="submit" name="login" value="Sign In" />
+            </form>
+            <form action="http://localhost:3000/users" method="POST" id="signup-form" class="hidden">
+                <h2 class="title">Welcome!</h2>
+                <hr>
+                <label class="label" for="username">Enter Username:</label>
+                <input class="input" type="text" name="username" placeholder="Enter Username" value="" /> 
+                <br><br>
+                <input class="button is-primary" type="submit" name="signup" value="Sign Up"/>
+            </form>
+            <br>
+            <span class="toggle-sign-in">
+                Did you want to sign up instead?
+            </span>
+            <span class="toggle-sign-in hidden">
+                    Did you want to sign in instead?
+            </span>
         </div>
         <button class="modal-close is-large" aria-label="close"></button>
     </div> 
+    <button class="button is-primary top hidden">Top</button>
 </body>
 </html>

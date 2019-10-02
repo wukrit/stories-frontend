@@ -6,3 +6,33 @@
     margin-left: auto;
     margin-right: auto;
 }
+
+.modal-content {
+    text-align: center;
+}
+
+.hidden {
+    display: none;
+}
+
+.toggle-sign-in:hover {
+    cursor: pointer;
+}
+
+input:hover {
+    cursor: pointer;
+}
+
+.tile:hover {
+    cursor: pointer;
+}
+
+.topic {
+    min-height: 15vh;
+}
+
+.top {
+    position: fixed;
+    bottom: 80px;
+    right: 80px;
+}
