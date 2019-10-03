@@ -215,7 +215,7 @@ const toggleForms = event => {
 // Fetches
 
 // Initial Fetch
-fetch("http://localhost:3000/topics")
+fetch("https://fis-stories-backend.herokuapp.com/topics")
     .then(response => response.json())
     .then(topicArr => {
         cachedTopics = topicArr
@@ -238,7 +238,7 @@ signupForm.addEventListener("submit", event => {
 
 
 
-    fetch("http://localhost:3000/users", {
+    fetch("https://fis-stories-backend.herokuapp.com/users", {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
