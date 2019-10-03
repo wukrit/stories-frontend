@@ -55,3 +55,7 @@ input:hover {
 .modal-card .oi:hover {
     cursor: pointer;
 }
+
+.liked {
+    color: pink;
+}

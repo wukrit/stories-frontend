@@ -1,6 +1,12 @@
 let selectedColumn = null
 let cachedTopics = null
 
+// Check if User is Already Logged In
+if (document.cookie !== "") {
+    logout.classList.toggle("hidden")
+    login.classList.toggle("hidden")
+}
+
 
 // Element Creation Helpers
 const createNavElement = (linkText, linkTarget, id) => {
@@ -243,7 +249,7 @@ const toggleForms = event => {
 
 
 const logoutHandler = event => {
-    document.cookie = `username=; expires=${yesterday}`
+    document.cookie = `selectedUser=; expires=${yesterday}`
     alert('You have been logged out!')
     logout.classList.toggle("hidden")
     login.classList.toggle("hidden")
@@ -263,23 +269,47 @@ const loginHandler = event => {
     event.target.querySelector(".input").value = ""
 }
 
+const likeHandler = event => {
+    // // Make get fetch for likes
+    // if (document.cookie !== "" && turnCookieToObject(document.cookie)) {
+    //     // Check if user already like this post
+    //     // make a delete fetch
+    // } else if (document.cookie !== "") {
+       
+    //     // Make post fetch
+    // } else {
+    //     alert("You must be logged in to do that!")
+    // }
+}
+
+const dislikeHandler = event => {
+    // // make get fetch for dislikes
+    // if (document.cookie !== "") {
+    //     // make a post fetch
+    // } else if (document.cookie !== "" && ) {
+
+    // } else {
+    //     alert("You must be logged in to do that!")
+    // }
+}
+
 
 // Fetches
 
 // Logging In
-const userLoginFetch = userObject => {
+const userLoginFetch = givenUserObject => {
     fetch("https://fis-stories-backend.herokuapp.com/users")
     .then(res => res.json())
-    .then(userObj => {
+    .then(userObject => {
         
-        const currentUser = userObj.find(user => {
-            return user.username === userObject.username
+        const currentUser = userObject.find(user => {
+            return user.username === givenUserObject.username
         })
         if(currentUser) {
-            document.cookie = `username=${currentUser.username}; expires=${tomorrow}`
+            turnObjectToCookie(userObject)
             logout.classList.toggle("hidden")
             login.classList.toggle("hidden")
-            alert(`Welcome back ${userObject.username}!`)
+            alert(`Welcome back ${givenUserObject.username}!`)
             toggleLoginModal()
         } else {
             alert("Username does not exist")
@@ -303,7 +333,8 @@ const userPostFetch = userObj => {
             if (userObject.error){
                 alert("Username already exists")
             } else {
-                document.cookie = `username=${userObject.username}; expires=${tomorrow}`
+                // document.cookie = `username=${userObject.username}; expires=${tomorrow}`
+                turnObjectToCookie(userObject)
                 logout.classList.toggle("hidden")
                 login.classList.toggle("hidden")
                 toggleLoginModal()
@@ -318,3 +349,25 @@ fetch("https://fis-stories-backend.herokuapp.com/topics")
         cachedTopics = topicArr
         createTileList(cachedTopics)
     })
+
+
+// Cookie Helper
+const turnObjectToCookie = obj => {
+    const stringy = JSON.stringify(obj)
+    document.cookie = `selectedUser=${stringy}; expires=${tomorrow}`
+}
+
+const turnCookieToObject = string => {
+    const arrayOfStrings = string.split("=")
+    const userArr = JSON.parse(arrayOfStrings[1])
+    return userArr[0]
+}
+
+// Add user_id into user cookie
+
+// Render number of likes
+// Make the like/dislike clickable
+// Make post fetch happen when user clicks like
+    // Check to see if user is logged in
+// Show that a user already liked this (toggle class liked)
+// Make a delete fetch when user clicks like again
