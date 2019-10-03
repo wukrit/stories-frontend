@@ -1,29 +1,6 @@
-// Static DOM Elements
-const articleContainer = document.querySelector("#article-container")
-const articleListContainer = document.querySelector("#article-list-container")
-const topicContainer = document.querySelector("#topic-container")
-const topicList = document.querySelector("#topic-list")
-const articleList = document.querySelector("#article-list")
-const articleView = document.querySelector("#article-view")
-const leftNav = document.querySelector("#left-nav")
-const rightNav = document.querySelector("#right-nav")
-const login = document.querySelector("#login")
-const loginModal = document.querySelector("#login-modal")
-const loginModalCloseButton = document.querySelector(".modal-close")
-const loginModalBg = document.querySelector(".modal-background")
-const loginForm = document.querySelector("#login-form")
-const signupForm = document.querySelector("#signup-form")
-const toggleSpan = document.querySelectorAll(".toggle-sign-in")
-const topButton = document.querySelector(".top")
 let selectedColumn = null
 let cachedTopics = null
 const bgColorArr = ["has-background-primary", "has-background-info", "has-background-link", "has-background-success", "has-background-warning", "has-background-danger", "has-background-white"]
-
-const toggleForms = event => {
-    signupForm.classList.toggle("hidden")
-    loginForm.classList.toggle("hidden")
-    toggleSpan.forEach(span => span.classList.toggle("hidden"))
-}
 
 // Element Creation Helpers
 const createNavElement = (linkText, linkTarget, id) => {
@@ -50,7 +27,7 @@ const createTileList = topicArr => {
             tiles++
         } else {
             checkTopicCol(topic, true)
-            tiles = 0
+            tiles = 1
         }
     })
 }
@@ -98,7 +75,7 @@ const createArticleList = topic => {
             tiles++
         } else {
             checkArticleCols(article, topic, true)
-            tiles = 0
+            tiles = 1
         }
     })
     createNavElement("Back to Articles", articleList, "back-to-articles")
@@ -227,6 +204,12 @@ const revealTopButton = event => {
     } else {
         topButton.classList.add("hidden")
     }
+}
+
+const toggleForms = event => {
+    signupForm.classList.toggle("hidden")
+    loginForm.classList.toggle("hidden")
+    toggleSpan.forEach(span => span.classList.toggle("hidden"))
 }
 
 // Fetches
