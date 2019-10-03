@@ -1,0 +1,11 @@
+// Add Event Listeners
+window.addEventListener("scroll", revealTopButton)
+login.addEventListener("click", toggleLoginModal)
+loginModalCloseButton.addEventListener("click", toggleLoginModal)
+loginModalBg.addEventListener("click", toggleLoginModal)
+toggleSpan.forEach(span => span.addEventListener("click", toggleForms))
+topButton.addEventListener("click", event => {topicContainer.scrollIntoView({ behavior: 'smooth', block: 'start' })})
+signupForm.addEventListener("submit", signupHandler)
+logout.addEventListener("click", logoutHandler)
+loginForm.addEventListener("submit", loginHandler)
+articleModalBg.addEventListener("click", toggleArticleModal)
