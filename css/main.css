@@ -41,3 +41,17 @@ input:hover {
     border-radius: 10px;
 }
 
+.modal-card .divider {
+    padding: 10px;
+    font-size: x-large;
+}
+
+.modal-card .oi {
+    font-size: x-large;
+    cursor: pointer;
+}
+
+
+.modal-card .oi:hover {
+    cursor: pointer;
+}

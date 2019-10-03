@@ -130,8 +130,9 @@ const createArticleView = article => {
     articleLink.target = "_blank"
     articleLink.dataset.id = article.id
 
-    const articleTitle = document.createElement("p")
+    const articleTitle = document.createElement("a")
     articleTitle.classList.add("title")
+    articleTitle.href = article.url
     articleTitle.dataset.id = article.id
     articleTitle.innerText = article.title
 
@@ -147,7 +148,11 @@ const createArticleView = article => {
 
     const articleImage = document.createElement("img")
     articleImage.src = article.img_url
-    
+
+    const articleImageLink = document.createElement("a")
+    articleImageLink.href = article.img_url
+    articleImageLink.append(articleImage)
+
     const articleDesc = document.createElement("p")
     articleDesc.dataset.id = article.id
     articleDesc.innerText = article.description
@@ -156,10 +161,31 @@ const createArticleView = article => {
     articleDate.dataset.id = article.id
     articleDate.innerText = article.published_at
 
+    const thumbUp = document.createElement("span")
+    thumbUp.classList.add("oi")
+    thumbUp.dataset.glyph = "thumb-up"
+
+    const divider1 = document.createElement("span")
+    divider1.classList.add("divider")
+    divider1.innerText = " | "
+
+    const divider2 = document.createElement("span")
+    divider2.classList.add("divider")
+    divider2.innerText = " | "
+
+    const thumbDown = document.createElement("span")
+    thumbDown.classList.add("oi")
+    thumbDown.dataset.glyph = "thumb-down"
+
+    const discuss = document.createElement("span")
+    discuss.classList.add("oi")
+    discuss.dataset.glyph = "comment-square"
+
     articleModalHead.append(articleTitle)
-    articleModalBody.append(articleAuthor, articleSource, articleImage, articleDesc, articleDate)
+    articleModalBody.append(articleAuthor, articleSource, articleImageLink, articleDesc, articleDate)
+    articleModalFoot.append(thumbUp, divider1, thumbDown, divider2, discuss)
     articleModal.classList.toggle("is-active")
-    article.addEventListener("click")
+    
 }
 
 // Remove all Children of Element
