@@ -212,7 +212,75 @@ const toggleForms = event => {
     toggleSpan.forEach(span => span.classList.toggle("hidden"))
 }
 
+
+const logoutHandler = event => {
+    document.cookie = `username=; expires=${yesterday}`
+    alert('You have been logged out!')
+    logout.classList.toggle("hidden")
+    login.classList.toggle("hidden")
+}
+
+const signupHandler = event => {
+    event.preventDefault()
+    const userObj = {username: event.target.querySelector(".input").value}
+    userPostFetch(userObj)
+    event.target.querySelector(".input").value = ""
+}
+
+const loginHandler = event => {
+    event.preventDefault()
+    const userObject = {username: event.target.querySelector(".input").value}
+    userLoginFetch(userObject)
+    event.target.querySelector(".input").value = ""
+}
+
+
 // Fetches
+
+// Logging In
+const userLoginFetch = userObject => {
+    fetch("https://fis-stories-backend.herokuapp.com/users")
+    .then(res => res.json())
+    .then(userObj => {
+        
+        const currentUser = userObj.find(user => {
+            return user.username === userObject.username
+        })
+        if(currentUser) {
+            document.cookie = `username=${currentUser.username}; expires=${tomorrow}`
+            logout.classList.toggle("hidden")
+            login.classList.toggle("hidden")
+            alert(`Welcome back ${userObject.username}!`)
+            toggleLoginModal()
+        } else {
+            alert("Username does not exist")
+        }
+    })
+}
+
+// Post New User
+const userPostFetch = userObj => {
+    fetch("https://fis-stories-backend.herokuapp.com/users", {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify(userObj)
+    })
+        .then(res => res.json())
+        .then(userObject => {
+            // debugger
+            if (userObject.error){
+                alert("Username already exists")
+            } else {
+                document.cookie = `username=${userObject.username}; expires=${tomorrow}`
+                logout.classList.toggle("hidden")
+                login.classList.toggle("hidden")
+                toggleLoginModal()
+            }
+        })
+}
 
 // Initial Fetch
 fetch("https://fis-stories-backend.herokuapp.com/topics")
@@ -229,35 +297,6 @@ loginModalCloseButton.addEventListener("click", toggleLoginModal)
 loginModalBg.addEventListener("click", toggleLoginModal)
 toggleSpan.forEach(span => span.addEventListener("click", toggleForms))
 topButton.addEventListener("click", event => {topicContainer.scrollIntoView({ behavior: 'smooth', block: 'start' })})
-
-signupForm.addEventListener("submit", event => {
-    event.preventDefault()
-    console.log(event.target)
-
-    const userObj = {username: event.target.querySelector(".input").value}
-
-
-
-    fetch("https://fis-stories-backend.herokuapp.com/users", {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        },
-        body: JSON.stringify(userObj)
-    })
-        .then(res => res.json())
-        .then(userObject => {
-            document.cookie = `username=${userObject.username}; expires=${tomorrow}`
-            logout.classList.toggle("hidden")
-            login.classList.toggle("hidden")
-            toggleLoginModal()
-        })
-})
-
-logout.addEventListener("click", event => {
-    document.cookie = `username=; expires=${yesterday}`
-    logout.classList.toggle("hidden")
-    login.classList.toggle("hidden")
-
-})
+signupForm.addEventListener("submit", signupHandler)
+logout.addEventListener("click", logoutHandler)
+loginForm.addEventListener("submit", loginHandler)

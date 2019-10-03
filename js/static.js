@@ -16,9 +16,9 @@ const signupForm = document.querySelector("#signup-form")
 const toggleSpan = document.querySelectorAll(".toggle-sign-in")
 const topButton = document.querySelector(".top")
 const bgColorArr = ["has-background-primary", "has-background-info", "has-background-link", "has-background-success", "has-background-warning", "has-background-danger", "has-background-white"]
+const logout = document.querySelector("#logout")
 
 const tomorrow = new Date()
 tomorrow.setDate(tomorrow.getDate() + 1)
-const logout = document.querySelector("#logout")
 const yesterday = new Date()
 yesterday.setDate(yesterday.getDate() - 1)
