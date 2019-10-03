@@ -130,7 +130,7 @@ const createArticleTile = (article, topic) => {
     newTile.addEventListener("click", handleArticleClick)
 } 
 
-const createArticleView = article => {
+const createArticleView = (article, topic) => {
     const articleLink = document.createElement("a")
     articleLink.href = article.url
     articleLink.target = "_blank"
@@ -156,7 +156,7 @@ const createArticleView = article => {
     articleImage.src = article.img_url
 
     const articleImageLink = document.createElement("a")
-    articleImageLink.href = article.img_url
+    articleImageLink.href = article.url
     articleImageLink.append(articleImage)
 
     const articleDesc = document.createElement("p")
@@ -191,6 +191,18 @@ const createArticleView = article => {
     articleModalBody.append(articleAuthor, articleSource, articleImageLink, articleDesc, articleDate)
     articleModalFoot.append(thumbUp, divider1, thumbDown, divider2, discuss)
     articleModal.classList.toggle("is-active")
+
+    thumbUp.addEventListener("click", event => {
+        if (likeHandler(article, topic)) {
+            event.target.classList.toggle("liked")
+        }
+
+    })
+    thumbDown.addEventListener("click", event => {
+        if (dislikeHandler(article, topic)) {
+            event.target.classList.toggle("liked")
+        }
+    })
     
 }
 
@@ -222,7 +234,7 @@ const handleArticleClick = event => {
     clearChildren(articleModalHead)
     clearChildren(articleModalBody)
     clearChildren(articleModalFoot)
-    createArticleView(selectedArticle)
+    createArticleView(selectedArticle, selectedTopic)
 }
 
 const toggleLoginModal = event => {
@@ -269,28 +281,78 @@ const loginHandler = event => {
     event.target.querySelector(".input").value = ""
 }
 
-const likeHandler = event => {
-    // // Make get fetch for likes
-    // if (document.cookie !== "" && turnCookieToObject(document.cookie)) {
-    //     // Check if user already like this post
-    //     // make a delete fetch
-    // } else if (document.cookie !== "") {
-       
-    //     // Make post fetch
-    // } else {
-    //     alert("You must be logged in to do that!")
-    // }
+const likeHandler = (article, topic) => {
+    let likeArr = article.likes 
+    let toggleClass = false
+    
+    let likeObj = likeArr.find(like => like.user_id === turnCookieToObject(document.cookie).id)
+    if (document.cookie !== "") {
+        if (likeObj) {
+            fetch(`https://fis-stories-backend.herokuapp.com/likes/${likeObj.id}`, {method: "DELETE"})
+            let selLike = article.likes.find(like => like.id === likeObj.id)
+            article.likes.splice(article.likes.indexOf(selLike))
+            toggleClass = true
+        } else {
+            fetch("https://fis-stories-backend.herokuapp.com/likes", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    user_id: turnCookieToObject(document.cookie).id,
+                    article_id: article.id
+                })
+            })
+                .then(res => res.json())
+                .then(likeObj => {
+                    article.likes.push({id: likeObj.id, user_id: turnCookieToObject(document.cookie).id, article_id: article.id})
+                })
+            toggleClass = true
+        }
+    } else {
+        alert("You must be logged in to do that")
+    }
+    return toggleClass
 }
 
-const dislikeHandler = event => {
-    // // make get fetch for dislikes
-    // if (document.cookie !== "") {
-    //     // make a post fetch
-    // } else if (document.cookie !== "" && ) {
-
-    // } else {
-    //     alert("You must be logged in to do that!")
-    // }
+const dislikeHandler = (article, topic) => {
+    // Search articles for dislikes
+    let dislikeArr = article.dislikes
+    let toggleClass = false
+    
+    let dislikeObj = dislikeArr.find(dislike => dislike.user_id === turnCookieToObject(document.cookie).id)
+    // debugger
+     if (document.cookie !== "") {   
+        if (dislikeObj) {
+            // Delete fetch
+            fetch(`https://fis-stories-backend.herokuapp.com/dislikes/${dislikeObj.id}`, {method: "DELETE"})
+            let selDislike = article.dislikes.find(dislike => dislike.id === dislikeObj.id)
+            article.dislikes.splice(article.dislikes.indexOf(selDislike))
+            toggleClass = true
+        } else {
+            // Post fetch
+            fetch(`https://fis-stories-backend.herokuapp.com/dislikes`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    'Accept': "application/json"
+                },
+                body: JSON.stringify({
+                    user_id: turnCookieToObject(document.cookie).id,
+                    article_id: article.id
+                })
+            })
+                .then(res => res.json())
+                .then(dislikeObj => {
+                    article.dislikes.push({id: dislikeObj.id, user_id: turnCookieToObject(document.cookie).id, article_id: article.id})
+                })
+            toggleClass = true            
+        }
+     } else {
+         alert("You must be logged in to do that")
+     }
+    return toggleClass
 }
 
 
@@ -306,7 +368,7 @@ const userLoginFetch = givenUserObject => {
             return user.username === givenUserObject.username
         })
         if(currentUser) {
-            turnObjectToCookie(userObject)
+            turnObjectToCookie(currentUser)
             logout.classList.toggle("hidden")
             login.classList.toggle("hidden")
             alert(`Welcome back ${givenUserObject.username}!`)
@@ -359,15 +421,15 @@ const turnObjectToCookie = obj => {
 
 const turnCookieToObject = string => {
     const arrayOfStrings = string.split("=")
-    const userArr = JSON.parse(arrayOfStrings[1])
-    return userArr[0]
+    const userObj = JSON.parse(arrayOfStrings[1])
+    return userObj
 }
 
-// Add user_id into user cookie
+// Add user_id into user cookie X
 
-// Render number of likes
-// Make the like/dislike clickable
-// Make post fetch happen when user clicks like
-    // Check to see if user is logged in
+// Render number of likes  
+// Make the like/dislike clickable X 
+// Make post fetch happen when user clicks like X
+    // Check to see if user is logged in X 
 // Show that a user already liked this (toggle class liked)
-// Make a delete fetch when user clicks like again
+// Make a delete fetch when user clicks like again X
