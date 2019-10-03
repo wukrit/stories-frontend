@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/main.css">
     <script defer src="js/static.js"></script>
     <script defer src="js/main.js"></script>
+    <script defer src="js/events.js"></script>
 </head>
 <body>
     <header>
@@ -32,6 +33,12 @@
         </nav>
     </header>
     <main>
+        <p>
+            <span class="icon has-text-info">
+                <i class="mdi mdi-thumb-down-outline"></i>
+            </span>
+        </p>
+
         <div class="container level" id="topic-container">
             <div class="tile" id="topic-list">
                 
@@ -42,16 +49,26 @@
 
             </div>
         </div>
-        <div class="container level" id="article-container">
-            <div class="tile" id="article-view">
+        <div class="modal article-modal" id="article-modal">
+            <div class="modal-background article-modal-bg"></div> 
+            <div class="modal-card has-background-white">
+                <div class="modal-card-head">
 
+                </div>
+                <div class="modal-card-body">
+                    
+                </div>
+                <div class="modal-card-foot">
+                    
+                </div>
             </div>
         </div>
+        
     </main>
     <div class="modal" id="login-modal">
-        <div class="modal-background"></div>
+        <div class="modal-background login-modal-bg"></div>
         <div class="modal-content has-background-white box">
-            <form action="http://localhost:3000/users" method="GET" id="login-form">
+            <form action="" method="GET" id="login-form">
                 <h2 class="title">Welcome Back!</h2>
                 <hr>
                 <label class="label" for="username">Enter Username:</label>
@@ -59,7 +76,7 @@
                 <br><br>
                 <input class="button is-primary" type="submit" name="login" value="Sign In" />
             </form>
-            <form action="http://localhost:3000/users" method="POST" id="signup-form" class="hidden">
+            <form action="" method="POST" id="signup-form" class="hidden">
                 <h2 class="title">Welcome!</h2>
                 <hr>
                 <label class="label" for="username">Enter Username:</label>

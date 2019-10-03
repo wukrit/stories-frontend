@@ -37,3 +37,7 @@ input:hover {
     right: 80px;
 }
 
+.modal-card {
+    border-radius: 10px;
+}
+

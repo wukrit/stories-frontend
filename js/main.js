@@ -130,9 +130,6 @@ const createArticleView = article => {
     articleLink.target = "_blank"
     articleLink.dataset.id = article.id
 
-    const selectedArticleTile = document.createElement("div")
-    selectedArticleTile.classList.add("tile", "is-child", "is-12", "box")
-
     const articleTitle = document.createElement("p")
     articleTitle.classList.add("title")
     articleTitle.dataset.id = article.id
@@ -159,10 +156,10 @@ const createArticleView = article => {
     articleDate.dataset.id = article.id
     articleDate.innerText = article.published_at
 
-    selectedArticleTile.append(articleTitle, articleAuthor, articleSource, articleImage, articleDesc, articleDate)
-    articleLink.append(selectedArticleTile)
-    articleView.append(articleLink)
-    articleView.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    articleModalHead.append(articleTitle)
+    articleModalBody.append(articleAuthor, articleSource, articleImage, articleDesc, articleDate)
+    articleModal.classList.toggle("is-active")
+    article.addEventListener("click")
 }
 
 // Remove all Children of Element
@@ -190,12 +187,18 @@ const handleArticleClick = event => {
     const selectedArticle = selectedTopic.articles.find(article => {
         return parseInt(article.id) === parseInt(event.target.dataset.id)
     })
-    clearChildren(articleView)
+    clearChildren(articleModalHead)
+    clearChildren(articleModalBody)
+    clearChildren(articleModalFoot)
     createArticleView(selectedArticle)
 }
 
 const toggleLoginModal = event => {
     loginModal.classList.toggle("is-active")
+}
+
+const toggleArticleModal = event => {
+    articleModal.classList.toggle("is-active")
 }
 
 const revealTopButton = event => {
@@ -289,14 +292,3 @@ fetch("https://fis-stories-backend.herokuapp.com/topics")
         cachedTopics = topicArr
         createTileList(cachedTopics)
     })
-
-// Add Event Listeners
-window.addEventListener("scroll", revealTopButton)
-login.addEventListener("click", toggleLoginModal)
-loginModalCloseButton.addEventListener("click", toggleLoginModal)
-loginModalBg.addEventListener("click", toggleLoginModal)
-toggleSpan.forEach(span => span.addEventListener("click", toggleForms))
-topButton.addEventListener("click", event => {topicContainer.scrollIntoView({ behavior: 'smooth', block: 'start' })})
-signupForm.addEventListener("submit", signupHandler)
-logout.addEventListener("click", logoutHandler)
-loginForm.addEventListener("submit", loginHandler)
