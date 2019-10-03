@@ -84,6 +84,9 @@ const turnCookieToObject = string => {
     return userObj
 }
 
+
+// To Do List - 
+
 // Add user_id into user cookie X
 
 // Render number of likes  
