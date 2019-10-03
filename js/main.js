@@ -1,6 +1,6 @@
 let selectedColumn = null
 let cachedTopics = null
-const bgColorArr = ["has-background-primary", "has-background-info", "has-background-link", "has-background-success", "has-background-warning", "has-background-danger", "has-background-white"]
+
 
 // Element Creation Helpers
 const createNavElement = (linkText, linkTarget, id) => {
@@ -229,3 +229,35 @@ loginModalCloseButton.addEventListener("click", toggleLoginModal)
 loginModalBg.addEventListener("click", toggleLoginModal)
 toggleSpan.forEach(span => span.addEventListener("click", toggleForms))
 topButton.addEventListener("click", event => {topicContainer.scrollIntoView({ behavior: 'smooth', block: 'start' })})
+
+signupForm.addEventListener("submit", event => {
+    event.preventDefault()
+    console.log(event.target)
+
+    const userObj = {username: event.target.querySelector(".input").value}
+
+
+
+    fetch("http://localhost:3000/users", {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify(userObj)
+    })
+        .then(res => res.json())
+        .then(userObject => {
+            document.cookie = `username=${userObject.username}; expires=${tomorrow}`
+            logout.classList.toggle("hidden")
+            login.classList.toggle("hidden")
+            toggleLoginModal()
+        })
+})
+
+logout.addEventListener("click", event => {
+    document.cookie = `username=; expires=${yesterday}`
+    logout.classList.toggle("hidden")
+    login.classList.toggle("hidden")
+
+})
