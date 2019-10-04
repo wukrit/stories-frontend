@@ -74,7 +74,6 @@ const createArticleList = topic => {
             tiles = 1
         }
     })
-    createNavElement("Back to Articles", articleList, "back-to-articles")
     articleList.scrollIntoView({ behavior: 'smooth', block: 'start' })
 }
 
@@ -235,4 +234,26 @@ const createArticleView = (article, topic) => {
         }
     })
     
+}
+
+const makeLikeList = user => {
+    const listLikedArticles = document.createElement("ul")
+    listLikedArticles.classList.add("like-list")
+    articleModalBody.append(listLikedArticles)
+
+    user.likes.forEach(like => {
+        fetch(`https://fis-stories-backend.herokuapp.com/articles/${like.article_id}`)
+        .then(response => response.json())
+        .then(article => {
+                const newLi = document.createElement("li")
+                newLi.id = article.id
+                newLi.innerText = `${article.title} | ${article.source}`
+                
+                const artLink = document.createElement("a")
+                artLink.href = article.url
+                
+                artLink.append(newLi)
+                listLikedArticles.append(artLink)
+            })    
+    })
 }

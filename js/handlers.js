@@ -49,6 +49,7 @@ const logoutHandler = event => {
     logout.classList.toggle("hidden")
     login.classList.toggle("hidden")
     loggedInNav.classList.toggle("hidden")
+    clearChildren(articleList)
 }
 
 const signupHandler = event => {
@@ -143,4 +144,28 @@ const dislikeHandler = article => {
      }
      const returnObj = {toggle: toggleClass, increment: increment}
      return returnObj
+}
+
+const handleUserClick = event => {
+    clearChildren(articleModalHead)
+    clearChildren(articleModalBody)
+    clearChildren(articleModalFoot)
+    if (document.cookie !== "") {
+        
+        const user = turnCookieToObject(document.cookie)
+        const likeArr = user.likes
+        
+        const usernameTitle = document.createElement("h2")
+        usernameTitle.classList.add("title")
+        usernameTitle.innerText = `${user.username}'s Profile`
+                
+        const listTitle = document.createElement("h2")
+        listTitle.classList.add("title")
+        listTitle.innerText = "Liked Articles:"
+
+        articleModalBody.append(listTitle)
+        makeLikeList(user)
+        articleModalHead.append(usernameTitle)
+        articleModal.classList.toggle("is-active")   
+    }
 }
