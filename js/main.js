@@ -114,11 +114,7 @@ const fetchArticleDislikes = (article) => {
 
 // To Do List - 
 
-// Add user_id into user cookie X
-
-// Render number of likes X
-// Make the like/dislike clickable X 
-// Make post fetch happen when user clicks like X
-    // Check to see if user is logged in X 
-// Show that a user already liked this (toggle class liked) 
-// Make a delete fetch when user clicks like again X
+// See User Profile
+    // View users liked articles
+// Add comments
+    // Add replies
