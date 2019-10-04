@@ -250,6 +250,7 @@ const makeLikeList = user => {
                 newLi.innerText = `${article.title} | ${article.source}`
                 
                 const artLink = document.createElement("a")
+                artLink.target = "_blank"
                 artLink.href = article.url
                 
                 artLink.append(newLi)
