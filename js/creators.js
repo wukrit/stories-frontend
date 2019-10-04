@@ -66,7 +66,7 @@ const createArticleList = topic => {
     let tiles = 0
 
     topic.articles.map(article => {
-        if (tiles < 20) {
+        if (tiles < 5) {
             checkArticleCols(article, topic)
             tiles++
         } else {
