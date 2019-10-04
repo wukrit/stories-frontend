@@ -37,7 +37,7 @@ const checkTopicCol = (topic, newCol = false) => {
 
 const createTopicTile = topic => {
     const newTile = document.createElement("div")
-    newTile.classList.add("tile", "is-child", "box",  "topic")
+    newTile.classList.add("tile", "is-child", "box", "topic")
     newTile.dataset.id = topic.id
 
     const topicTitle = document.createElement("p")
@@ -86,7 +86,7 @@ const checkArticleCols = (article, topic, newCol = false) => {
 
 const createArticleTile = (article, topic) => {
     const newTile = document.createElement("div")
-    newTile.classList.add("tile", "is-child", "box")
+    newTile.classList.add("tile", "is-child", "box", "article-tile")
     newTile.classList.add(bgColorArr[Math.floor(Math.random()*bgColorArr.length)])
     newTile.dataset.id = article.id
     newTile.dataset.topicId = topic.id

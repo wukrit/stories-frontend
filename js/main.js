@@ -116,8 +116,5 @@ if (document.cookie !== "") {
 
 
 // To Do List - 
-
-// See User Profile
-    // View users liked articles
 // Add comments
     // Add replies
