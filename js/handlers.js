@@ -79,7 +79,6 @@ const likeHandler = article => {
             let selLike = article.likes.find(like => like.id === likeObj.id)
             article.likes.splice(article.likes.indexOf(selLike))
 
-            // debugger
             user.likes.forEach(like => {
                 if (like.id === likeObj.id) {
                     delete user.likes[user.likes.indexOf(like)]
@@ -87,7 +86,6 @@ const likeHandler = article => {
                     user.likes = newLikes
                 }
             })
-
             turnObjectToCookie(user)
 
             toggleClass = true
