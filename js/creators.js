@@ -202,13 +202,18 @@ const createArticleView = (article, topic) => {
 
     thumbUp.addEventListener("click", event => {
         const handleObj = likeHandler(article)
-        if (handleObj.toggle) {
+        debugger
+        if (handleObj.toggle === true) {
             const numUp = event.target.parentElement.querySelector("#num-thumb-up")
             let num = parseInt(numUp.innerText)
-            if (handleObj.increment) {
-                numUp.innerText = newNum++
+            debugger
+            if (handleObj.increment === true) {
+                debugger
+                num++
+                numUp.innerText = num
             } else {
-                numUp.innerText = newNum--
+                num--
+                numUp.innerText = num
             }
             event.target.classList.toggle("liked")
         }
@@ -216,13 +221,15 @@ const createArticleView = (article, topic) => {
 
     thumbDown.addEventListener("click", event => {
         const handleObj = dislikeHandler(article)
-        if (handleObj.toggle) {
+        if (handleObj.toggle === true) {
             const numDown = event.target.parentElement.querySelector("#num-thumb-down")
             let num = parseInt(numDown.innerText)
-            if (handleObj.increment) {
-                numDown.innerText = newNum++
+            if (handleObj.increment === true) {
+                num++
+                numDown.innerText = num
             } else {
-                numDown.innerText = newNum--
+                num--
+                numDown.innerText = num
             }
             event.target.classList.toggle("liked")
         }

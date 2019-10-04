@@ -48,6 +48,7 @@ const logoutHandler = event => {
     alert('You have been logged out!')
     logout.classList.toggle("hidden")
     login.classList.toggle("hidden")
+    loggedInNav.classList.toggle("hidden")
 }
 
 const signupHandler = event => {

@@ -1,12 +1,6 @@
 let selectedColumn = null
 let cachedTopics = null
 
-// Check if User is Already Logged In
-if (document.cookie !== "") {
-    logout.classList.toggle("hidden")
-    login.classList.toggle("hidden")
-    loggedInNav.classList.toggle("hidden")
-}
 
 // Remove all Children of Element
 const clearChildren = element => {
@@ -91,13 +85,13 @@ const turnCookieToObject = string => {
 
 const fetchArticleLikes = (article) => {
     const likeArr = article.likes
-    let likeObjArr = likeArr.select(like => like.user_id === turnCookieToObject(document.cookie).id)
     let selectedLikeArr = []
     likeArr.forEach(like => {
         if (like.user_id === turnCookieToObject(document.cookie).id) {
-            selectedLikeArr.push(dislike)
+            selectedLikeArr.push(like)
         }
     })
+    return selectedLikeArr
 }
 
 const fetchArticleDislikes = (article) => {
@@ -108,8 +102,18 @@ const fetchArticleDislikes = (article) => {
             selectedDislikeArr.push(dislike)
         }
     })
-
+    return selectedDislikeArr
 }
+
+
+// Check if User is Already Logged In
+if (document.cookie !== "") {
+    logout.classList.toggle("hidden")
+    login.classList.toggle("hidden")
+    loggedInNav.classList.toggle("hidden")
+    loggedInNav.innerText = turnCookieToObject(document.cookie).username
+}
+
 
 // To Do List - 
 
