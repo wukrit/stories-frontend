@@ -130,6 +130,7 @@ const createArticleView = (article, topic) => {
     articleTitle.href = article.url
     articleTitle.dataset.id = article.id
     articleTitle.innerText = article.title
+    articleTitle.target = "_blank"
 
     const articleAuthor = document.createElement("p")
     articleAuthor.classList.add("subtitle")
@@ -145,6 +146,7 @@ const createArticleView = (article, topic) => {
     articleImage.src = article.img_url
 
     const articleImageLink = document.createElement("a")
+    articleImageLink.target = = "_blank"
     articleImageLink.href = article.url
     articleImageLink.append(articleImage)
 
