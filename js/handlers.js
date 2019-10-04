@@ -64,9 +64,10 @@ const loginHandler = event => {
     event.target.querySelector(".input").value = ""
 }
 
-const likeHandler = (article, topic) => {
+const likeHandler = article => {
     let likeArr = article.likes 
     let toggleClass = false
+    let increment = true
     
     let likeObj = likeArr.find(like => like.user_id === turnCookieToObject(document.cookie).id)
     if (document.cookie !== "") {
@@ -75,6 +76,7 @@ const likeHandler = (article, topic) => {
             let selLike = article.likes.find(like => like.id === likeObj.id)
             article.likes.splice(article.likes.indexOf(selLike))
             toggleClass = true
+            increment = false
         } else {
             fetch("https://fis-stories-backend.herokuapp.com/likes", {
                 method: "POST",
@@ -96,13 +98,15 @@ const likeHandler = (article, topic) => {
     } else {
         alert("You must be logged in to do that")
     }
-    return toggleClass
+    const returnObj = {toggle: toggleClass, increment: increment}
+    return returnObj
 }
 
-const dislikeHandler = (article, topic) => {
+const dislikeHandler = article => {
     // Search articles for dislikes
     let dislikeArr = article.dislikes
     let toggleClass = false
+    let increment = true
     
     let dislikeObj = dislikeArr.find(dislike => dislike.user_id === turnCookieToObject(document.cookie).id)
     // debugger
@@ -113,6 +117,7 @@ const dislikeHandler = (article, topic) => {
             let selDislike = article.dislikes.find(dislike => dislike.id === dislikeObj.id)
             article.dislikes.splice(article.dislikes.indexOf(selDislike))
             toggleClass = true
+            increment = false
         } else {
             // Post fetch
             fetch(`https://fis-stories-backend.herokuapp.com/dislikes`, {
@@ -135,5 +140,6 @@ const dislikeHandler = (article, topic) => {
      } else {
          alert("You must be logged in to do that")
      }
-    return toggleClass
+     const returnObj = {toggle: toggleClass, increment: increment}
+     return returnObj
 }

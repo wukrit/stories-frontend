@@ -157,10 +157,6 @@ const createArticleView = (article, topic) => {
     articleDate.dataset.id = article.id
     articleDate.innerText = article.published_at
 
-    const thumbUp = document.createElement("span")
-    thumbUp.classList.add("oi")
-    thumbUp.dataset.glyph = "thumb-up"
-
     const divider1 = document.createElement("span")
     divider1.classList.add("divider")
     divider1.innerText = " | "
@@ -168,6 +164,10 @@ const createArticleView = (article, topic) => {
     const divider2 = document.createElement("span")
     divider2.classList.add("divider")
     divider2.innerText = " | "
+
+    const thumbUp = document.createElement("span")
+    thumbUp.classList.add("oi")
+    thumbUp.dataset.glyph = "thumb-up"
 
     const thumbDown = document.createElement("span")
     thumbDown.classList.add("oi")
@@ -177,19 +177,53 @@ const createArticleView = (article, topic) => {
     discuss.classList.add("oi")
     discuss.dataset.glyph = "comment-square"
 
+    const numThumbUp = document.createElement("span")
+    numThumbUp.classList.add("num-thumbs")
+    numThumbUp.id = "num-thumb-up"
+    numThumbUp.innerText = fetchArticleLikes(article).length
+
+    const numThumbDown = document.createElement("span")
+    numThumbDown.classList.add("num-thumbs")
+    numThumbDown.id = "num-thumb-down"
+    numThumbDown.innerText = fetchArticleDislikes(article).length
+
     articleModalHead.append(articleTitle)
     articleModalBody.append(articleAuthor, articleSource, articleImageLink, articleDesc, articleDate)
-    articleModalFoot.append(thumbUp, divider1, thumbDown, divider2, discuss)
+    articleModalFoot.append(thumbUp, numThumbUp, divider1, thumbDown, numThumbDown, divider2, discuss)
     articleModal.classList.toggle("is-active")
 
+    if (fetchArticleLikes(article).find(like => like.user_id === turnCookieToObject(document.cookie).id)) {
+        thumbUp.classList.add("liked")
+    }
+
+    if (fetchArticleDislikes(article).find(dislike => dislike.user_id === turnCookieToObject(document.cookie).id)) {
+        thumbDown.classList.add("liked")
+    }
+
     thumbUp.addEventListener("click", event => {
-        if (likeHandler(article, topic)) {
+        const handleObj = likeHandler(article)
+        if (handleObj.toggle) {
+            const numUp = event.target.parentElement.querySelector("#num-thumb-up")
+            let num = parseInt(numUp.innerText)
+            if (handleObj.increment) {
+                numUp.innerText = newNum++
+            } else {
+                numUp.innerText = newNum--
+            }
             event.target.classList.toggle("liked")
         }
-
     })
+
     thumbDown.addEventListener("click", event => {
-        if (dislikeHandler(article, topic)) {
+        const handleObj = dislikeHandler(article)
+        if (handleObj.toggle) {
+            const numDown = event.target.parentElement.querySelector("#num-thumb-down")
+            let num = parseInt(numDown.innerText)
+            if (handleObj.increment) {
+                numDown.innerText = newNum++
+            } else {
+                numDown.innerText = newNum--
+            }
             event.target.classList.toggle("liked")
         }
     })

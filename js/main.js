@@ -90,13 +90,35 @@ const turnCookieToObject = string => {
 }
 
 
+const fetchArticleLikes = (article) => {
+    const likeArr = article.likes
+    let likeObjArr = likeArr.select(like => like.user_id === turnCookieToObject(document.cookie).id)
+    let selectedLikeArr = []
+    likeArr.forEach(like => {
+        if (like.user_id === turnCookieToObject(document.cookie).id) {
+            selectedLikeArr.push(dislike)
+        }
+    })
+}
+
+const fetchArticleDislikes = (article) => {
+    const dislikeArr = article.dislikes
+    let selectedDislikeArr = []
+    dislikeArr.forEach(dislike => {
+        if (dislike.user_id === turnCookieToObject(document.cookie).id) {
+            selectedDislikeArr.push(dislike)
+        }
+    })
+
+}
+
 // To Do List - 
 
 // Add user_id into user cookie X
 
-// Render number of likes  
+// Render number of likes X
 // Make the like/dislike clickable X 
 // Make post fetch happen when user clicks like X
     // Check to see if user is logged in X 
-// Show that a user already liked this (toggle class liked)
+// Show that a user already liked this (toggle class liked) 
 // Make a delete fetch when user clicks like again X
