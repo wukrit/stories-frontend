@@ -240,7 +240,7 @@ const makeLikeList = user => {
     const listLikedArticles = document.createElement("ul")
     listLikedArticles.classList.add("like-list")
     articleModalBody.append(listLikedArticles)
-
+    debugger
     user.likes.forEach(like => {
         fetch(`https://fis-stories-backend.herokuapp.com/articles/${like.article_id}`)
         .then(response => response.json())

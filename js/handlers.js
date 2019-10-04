@@ -73,10 +73,17 @@ const likeHandler = article => {
     
     let likeObj = likeArr.find(like => like.user_id === turnCookieToObject(document.cookie).id)
     if (document.cookie !== "") {
+        let user = turnCookieToObject(document.cookie) 
         if (likeObj) {
             fetch(`https://fis-stories-backend.herokuapp.com/likes/${likeObj.id}`, {method: "DELETE"})
             let selLike = article.likes.find(like => like.id === likeObj.id)
             article.likes.splice(article.likes.indexOf(selLike))
+            user.likes.forEach(like => {
+                if (like.id === likeObj.id) {
+                    user.likes.splice(user.likes.indexOf(like))
+                }
+            })
+            user.likes.splice(user.dislikes.indexOf())
             toggleClass = true
             increment = false
         } else {
@@ -108,11 +115,10 @@ const dislikeHandler = article => {
     // Search articles for dislikes
     let dislikeArr = article.dislikes
     let toggleClass = false
-    let increment = true
-    
+    let increment = true    
     let dislikeObj = dislikeArr.find(dislike => dislike.user_id === turnCookieToObject(document.cookie).id)
     // debugger
-     if (document.cookie !== "") {   
+     if (document.cookie !== "") {  
         if (dislikeObj) {
             // Delete fetch
             fetch(`https://fis-stories-backend.herokuapp.com/dislikes/${dislikeObj.id}`, {method: "DELETE"})
