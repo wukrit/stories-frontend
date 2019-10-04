@@ -22,6 +22,7 @@ const articleModalBg = document.querySelector(".article-modal-bg")
 const articleModalHead = document.querySelector(".modal-card-head")
 const articleModalBody = document.querySelector(".modal-card-body")
 const articleModalFoot = document.querySelector(".modal-card-foot")
+const loggedInNav = Document.querySelector("#logged-in-nav")
 
 const tomorrow = new Date()
 tomorrow.setDate(tomorrow.getDate() + 1)

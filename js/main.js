@@ -5,6 +5,7 @@ let cachedTopics = null
 if (document.cookie !== "") {
     logout.classList.toggle("hidden")
     login.classList.toggle("hidden")
+    loggedInNav.classList.toggle("hidden")
 }
 
 // Remove all Children of Element
@@ -30,6 +31,8 @@ const userLoginFetch = givenUserObject => {
             turnObjectToCookie(currentUser)
             logout.classList.toggle("hidden")
             login.classList.toggle("hidden")
+            loggedInNav.classList.toggle("hidden")
+            loggedInNav.innerText = currentUser.username
             alert(`Welcome back ${givenUserObject.username}!`)
             toggleLoginModal()
         } else {
@@ -58,6 +61,8 @@ const userPostFetch = userObj => {
                 turnObjectToCookie(userObject)
                 logout.classList.toggle("hidden")
                 login.classList.toggle("hidden")
+                loggedInNav.classList.toggle("hidden")
+                loggedInNav.innerText = userObject.username
                 toggleLoginModal()
             }
         })
