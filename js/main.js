@@ -57,7 +57,6 @@ const userPostFetch = userObj => {
             if (userObject.error){
                 alert("Username already exists")
             } else {
-                // document.cookie = `username=${userObject.username}; expires=${tomorrow}`
                 turnObjectToCookie(userObject)
                 logout.classList.toggle("hidden")
                 login.classList.toggle("hidden")
