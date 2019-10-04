@@ -202,13 +202,13 @@ const createArticleView = (article, topic) => {
 
     thumbUp.addEventListener("click", event => {
         const handleObj = likeHandler(article)
-        debugger
+        // debugger
         if (handleObj.toggle === true) {
             const numUp = event.target.parentElement.querySelector("#num-thumb-up")
             let num = parseInt(numUp.innerText)
-            debugger
+            // debugger
             if (handleObj.increment === true) {
-                debugger
+                // debugger
                 num++
                 numUp.innerText = num
             } else {

@@ -85,24 +85,24 @@ const turnCookieToObject = string => {
 
 const fetchArticleLikes = (article) => {
     const likeArr = article.likes
-    let selectedLikeArr = []
-    likeArr.forEach(like => {
-        if (like.user_id === turnCookieToObject(document.cookie).id) {
-            selectedLikeArr.push(like)
-        }
-    })
-    return selectedLikeArr
+    // let selectedLikeArr = []
+    // likeArr.forEach(like => {
+    //     if (like.user_id === turnCookieToObject(document.cookie).id) {
+    //         selectedLikeArr.push(like)
+    //     }
+    // })
+    return likeArr
 }
 
 const fetchArticleDislikes = (article) => {
     const dislikeArr = article.dislikes
-    let selectedDislikeArr = []
-    dislikeArr.forEach(dislike => {
-        if (dislike.user_id === turnCookieToObject(document.cookie).id) {
-            selectedDislikeArr.push(dislike)
-        }
-    })
-    return selectedDislikeArr
+    // let selectedDislikeArr = []
+    // dislikeArr.forEach(dislike => {
+    //     if (dislike.user_id === turnCookieToObject(document.cookie).id) {
+    //         selectedDislikeArr.push(dislike)
+    //     }
+    // })
+    return dislikeArr
 }
 
 
