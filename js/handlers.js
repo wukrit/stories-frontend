@@ -78,12 +78,18 @@ const likeHandler = article => {
             fetch(`https://fis-stories-backend.herokuapp.com/likes/${likeObj.id}`, {method: "DELETE"})
             let selLike = article.likes.find(like => like.id === likeObj.id)
             article.likes.splice(article.likes.indexOf(selLike))
+
+            // debugger
             user.likes.forEach(like => {
                 if (like.id === likeObj.id) {
-                    user.likes.splice(user.likes.indexOf(like))
+                    delete user.likes[user.likes.indexOf(like)]
+                    newLikes = user.likes.filter(Boolean)
+                    user.likes = newLikes
                 }
             })
-            user.likes.splice(user.dislikes.indexOf())
+
+            turnObjectToCookie(user)
+
             toggleClass = true
             increment = false
         } else {
@@ -101,6 +107,8 @@ const likeHandler = article => {
                 .then(res => res.json())
                 .then(likeObj => {
                     article.likes.push({id: likeObj.id, user_id: turnCookieToObject(document.cookie).id, article_id: article.id})
+                    user.likes.push(likeObj)
+                    turnObjectToCookie(user)
                 })
             toggleClass = true
         }
