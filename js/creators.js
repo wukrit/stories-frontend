@@ -146,7 +146,7 @@ const createArticleView = (article, topic) => {
     articleImage.src = article.img_url
 
     const articleImageLink = document.createElement("a")
-    articleImageLink.target = = "_blank"
+    articleImageLink.target = "_blank"
     articleImageLink.href = article.url
     articleImageLink.append(articleImage)
 
